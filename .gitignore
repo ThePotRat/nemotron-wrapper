@@ -1,0 +1,16 @@
+# Environment / secrets
+.env
+.env.local
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Vercel
+.vercel
+
+# OS
+.DS_Store
