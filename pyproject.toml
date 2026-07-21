@@ -1,2 +1,3 @@
-[tool.vercel]
-entrypoint = "api/index.py"
+# Remove or delete these lines from pyproject.toml:
+# [tool.vercel]
+# entrypoint = "api/index.py"
