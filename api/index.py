@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from openai import OpenAI
 
 app = Flask(__name__)
@@ -34,6 +34,10 @@ def _load_system_prompt():
 
 SYSTEM_PROMPT = _load_system_prompt()
 
+@app.route('/', methods=['GET'])
+def home():
+    return send_from_directory('../public', 'index.html')
+    
 @app.route("/api/chat", methods=["POST"])
 def chat():
     try:
