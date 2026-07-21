@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 # The NVIDIA API key is read from Vercel Environment Variables.
 # NEVER hard-code it here.
+
+
 client = OpenAI(
     base_url=httpsintegrate.api.nvidia.comv1,
     api_key=os.environ.get(NVIDIA_API_KEY),
@@ -88,4 +90,5 @@ def health()
     return jsonify({status ok})
 
 
-if __name
+if __name__ == "__main__":
+    app.run()
