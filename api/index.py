@@ -1,17 +1,15 @@
 import os
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from openai import OpenAI
 
-# Tell Flask where to look for the static frontend files
-app = Flask(__name__, static_folder="../public", static_url_path="")
+app = Flask(__name__)
 
-# Read NVIDIA API Key from environment variables
+# Read NVIDIA API Key from Vercel Environment Variables
 client = OpenAI(
     base_url="https://integrate.api.nvidia.com/v1",
     api_key=os.environ.get("NVIDIA_API_KEY"),
 )
 
-# Load hidden system prompt
 def _load_system_prompt():
     candidates = [
         os.path.join(os.path.dirname(__file__), "..", "system_prompt.txt"),
@@ -30,12 +28,6 @@ def _load_system_prompt():
 
 SYSTEM_PROMPT = _load_system_prompt()
 
-# Serve index.html at root "/"
-@app.route("/", methods=["GET"])
-def home():
-    return send_from_directory("../public", "index.html")
-
-# Chat endpoint
 @app.route("/api/chat", methods=["POST"])
 def chat():
     try:
@@ -72,7 +64,6 @@ def chat():
         print("Error:", e)
         return jsonify({"error": "AI service error."}), 500
 
-# Health check
 @app.route("/api/chat", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})
