@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from openai import OpenAI
 
 app = Flask(__name__)
@@ -30,6 +30,12 @@ def _load_system_prompt():
     return "You are a helpful AI assistant."
 
 SYSTEM_PROMPT = _load_system_prompt()
+
+# Serve the frontend interface at root
+@app.route("/", methods=["GET"])
+def home():
+    public_dir = os.path.join(os.path.dirname(__file__), "..", "public")
+    return send_from_directory(public_dir, "index.html")
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
